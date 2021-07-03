@@ -47,9 +47,17 @@ Verify that current time in Vancouver, Canada (PDT) is **{server_now:%Y-%m-%d %H
 
 @bot.command(name='maintenance')
 async def maintenance(ctx: commands.Context, *args: str):
+    global maintenance_time
+
+    arg = ' '.join(args)
+
+    if arg == 'clear':
+        maintenance_time = None
+        update_loop.restart()
+        return
+
     try:
-        global maintenance_time
-        maintenance_time = datetime.strptime(' '.join(args), '%Y-%m-%d %H:%M')
+        maintenance_time = datetime.strptime(arg, '%Y-%m-%d %H:%M')
     except ValueError:
         await ctx.channel.send('Argument for `maintenance` command must be a date in ISO format (YYYY-MM-DD hh:mm)')
         return
