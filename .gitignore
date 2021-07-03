@@ -3,3 +3,5 @@ data.yaml
 
 venv/
 **/__pycache__/
+
+.idea/
